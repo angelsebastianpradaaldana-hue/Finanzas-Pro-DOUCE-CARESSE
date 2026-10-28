@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="FINANZAS PRO: calculadoras de matemáticas financieras para estudiantes y proyectos.">
+<title>FINANZAS PRO | Calculadora Financiera Inteligente</title>
+<style>
+:root{--navy:#10243a;--navy2:#173955;--green:#16a36a;--green2:#dff7eb;--bg:#f3f6fa;--ink:#1b2938;--muted:#64748b;--line:#dbe3ec;--white:#fff;--red:#c0392b;--shadow:0 10px 30px rgba(16,36,58,.08)}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--bg);font-family:Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;color:var(--ink)}
+header{background:linear-gradient(120deg,var(--navy),var(--navy2));color:white;padding:25px clamp(16px,4vw,54px) 22px}
+.brand{display:flex;align-items:center;gap:13px}.logo{width:47px;height:47px;border-radius:14px;background:var(--green);display:grid;place-items:center;font-size:25px;font-weight:900;box-shadow:0 5px 18px #0002}
+.brand h1{font-size:clamp(1.25rem,3vw,1.8rem);margin:0;letter-spacing:.02em}.brand p{margin:4px 0 0;color:#d2e3ef;font-size:.9rem}
+nav{display:flex;gap:8px;overflow-x:auto;padding:15px clamp(16px,4vw,54px);background:#fff;border-bottom:1px solid var(--line);position:sticky;top:0;z-index:10}
+nav a{white-space:nowrap;text-decoration:none;color:var(--navy);font-weight:700;font-size:.86rem;padding:10px 13px;border-radius:9px}nav a:hover,nav a:focus{background:var(--green2);outline:none}
+main{max-width:1200px;margin:28px auto;padding:0 18px 50px}.hero{display:grid;grid-template-columns:1.5fr 1fr;gap:20px;align-items:stretch;margin-bottom:23px}
+.hero-panel,.panel,.tool-card{background:var(--white);border:1px solid var(--line);border-radius:17px;box-shadow:var(--shadow)}
+.hero-panel{padding:25px}.hero h2{margin:0 0 10px;font-size:clamp(1.5rem,3vw,2.1rem);color:var(--navy)}.hero p{line-height:1.65;color:var(--muted);margin:0}.hero-stat{padding:24px;border-radius:17px;background:linear-gradient(140deg,#e2f8ed,#f8fffb);border:1px solid #bdebd3;display:flex;flex-direction:column;justify-content:center}.hero-stat strong{font-size:1.4rem;color:#087747}.hero-stat span{color:#3f6657;font-size:.9rem;margin-top:6px}
+.section-title{display:flex;align-items:center;gap:10px;margin:34px 0 15px;color:var(--navy)}.section-title .num{display:grid;place-items:center;background:var(--green);color:white;border-radius:9px;width:35px;height:35px;font-weight:900}.section-title h2{font-size:1.35rem;margin:0}.section-title p{margin:3px 0 0;color:var(--muted);font-size:.9rem}
+.panel{padding:22px;margin-bottom:18px}.panel h3{margin:0 0 7px;color:var(--navy);font-size:1.1rem}.subtext{margin:0 0 18px;color:var(--muted);font-size:.91rem;line-height:1.5}
+.grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}.grid.two{grid-template-columns:repeat(2,minmax(0,1fr))}.field{display:flex;flex-direction:column;gap:6px;min-width:0}.field label{font-size:.83rem;font-weight:750;color:#34465a}.field input,.field select,.field textarea{width:100%;border:1px solid #cbd5e1;border-radius:9px;padding:11px 12px;background:#fff;color:var(--ink);font:inherit;min-width:0}.field input:focus,.field select:focus,.field textarea:focus{outline:2px solid #a4e8c8;border-color:var(--green)}.hint{font-size:.75rem;color:var(--muted)}
+.actions{display:flex;flex-wrap:wrap;gap:9px;margin-top:17px}.btn{border:0;border-radius:9px;padding:11px 15px;font-weight:800;cursor:pointer;font:inherit;font-size:.87rem}.btn.primary{background:var(--green);color:#fff}.btn.primary:hover{background:#0c8957}.btn.secondary{background:#e8eef5;color:var(--navy)}.btn.secondary:hover{background:#dbe5ef}
+.result{margin-top:17px;padding:15px 16px;background:#f0fbf5;border:1px solid #c7eed8;border-radius:11px;display:none;line-height:1.55}.result.show{display:block}.result strong{color:#087747}.error{background:#fff1f0;border-color:#f4c5c1;color:#9b2c23}.formula{font-family:ui-monospace,SFMono-Regular,Consolas,monospace;font-size:.86rem;background:#f4f7fa;border:1px solid var(--line);padding:10px 12px;border-radius:8px;margin-top:10px;overflow-wrap:anywhere}
+.table-wrap{overflow-x:auto;margin-top:16px}table{width:100%;border-collapse:collapse;font-size:.86rem;min-width:650px}th,td{padding:10px 11px;border-bottom:1px solid var(--line);text-align:right;white-space:nowrap}th{background:#edf3f7;color:var(--navy);font-weight:800}th:first-child,td:first-child{text-align:left}tfoot{font-weight:850;background:#f5f8fb}
+.metrics{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin-top:15px}.metric{border:1px solid var(--line);border-radius:12px;padding:15px;background:#fff}.metric span{display:block;color:var(--muted);font-size:.78rem;font-weight:700}.metric strong{display:block;margin-top:6px;font-size:1.2rem;color:var(--navy);overflow-wrap:anywhere}
+canvas{width:100%;height:300px;display:block;border:1px solid var(--line);border-radius:10px;background:#fff;margin-top:16px}
+.flow-inputs{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}.flow-row{display:grid;grid-template-columns:.7fr 1.4fr 1fr auto;gap:9px;align-items:end;margin:10px 0}.flow-row .field{min-width:0}
+footer{background:var(--navy);color:#d9e7f1;padding:24px;text-align:center;font-size:.85rem}footer strong{color:#fff}
+.notice{font-size:.83rem;color:var(--muted);line-height:1.6;padding:12px 14px;border-left:4px solid var(--green);background:#f5fbf7;border-radius:0 8px 8px 0;margin-top:14px}
+@media(max-width:760px){.hero{grid-template-columns:1fr}.grid,.grid.two,.metrics{grid-template-columns:1fr 1fr}.flow-inputs{grid-template-columns:1fr 1fr}.flow-row{grid-template-columns:1fr 1fr}.flow-row .remove{align-self:end}}
+@media(max-width:480px){.grid,.grid.two,.metrics,.flow-inputs{grid-template-columns:1fr}.panel{padding:16px}.hero-panel,.hero-stat{padding:19px}.section-title h2{font-size:1.12rem}nav{padding:10px}}
+</style>
+</head>
+<body>
+<header>
+  <div class="brand"><div class="logo">₣</div><div><h1>FINANZAS PRO</h1><p>Calculadora Financiera Inteligente · Aprende, calcula y decide</p></div></div>
+</header>
+<nav aria-label="Navegación principal">
+  <a href="#tasas">Tasas</a><a href="#tiempo">Valor del dinero</a><a href="#flujos">Diagramas</a><a href="#amortizacion">Amortización</a><a href="#proyectos">Proyectos de inversión</a>
+</nav>
+<main>
+  <section class="hero">
+    <div class="hero-panel"><h2>Decisiones financieras con mejores datos.</h2><p>Calcula tasas de interés, evalúa el valor del dinero en el tiempo, construye flujos de caja, genera tablas de amortización y analiza proyectos de inversión desde un solo lugar.</p></div>
+    <div class="hero-stat"><strong>Herramientas prácticas</strong><span>Resultados transparentes, fórmulas visibles y tablas que puedes descargar para tu trabajo académico.</span></div>
+  </section>
+
+  <section id="tasas">
+    <div class="section-title"><span class="num">1</span><div><h2>Conversión de tasas de interés</h2><p>Convierte tasas nominales, efectivas, vencidas y anticipadas.</p></div></div>
+    <div class="panel">
+      <h3>Convertidor de tasas</h3><p class="subtext">La tasa de entrada se convierte primero a una tasa efectiva anual (EA) y luego a la periodicidad de destino. Las tasas nominales requieren una frecuencia de capitalización.</p>
+      <div class="grid">
+        <div class="field"><label for="rateValue">Tasa de entrada (%)</label><input id="rateValue" type="number" min="0" step="any" value="2"></div>
+        <div class="field"><label for="rateType">Tipo de tasa de entrada</label><select id="rateType"><option value="effective">Efectiva</option><option value="nominal">Nominal</option></select></div>
+        <div class="field"><label for="ratePeriod">Periodicidad de entrada</label><select id="ratePeriod"><option value="1">Anual</option><option value="2">Semestral</option><option value="4">Trimestral</option><option value="6">Bimestral</option><option value="12" selected>Mensual</option><option value="24">Quincenal (24/año)</option><option value="26">Quincenal (26/año)</option><option value="52">Semanal</option><option value="365">Diaria (365/año)</option></select></div>
+        <div class="field"><label for="rateMode">Modalidad de entrada</label><select id="rateMode"><option value=" vencida">Vencida</option><option value="anticipada">Anticipada</option></select></div>
+        <div class="field"><label for="targetType">Tipo de tasa de salida</label><select id="targetType"><option value="effective">Efectiva</option><option value="nominal">Nominal</option></select></div>
+        <div class="field"><label for="targetPeriod">Periodicidad de salida</label><select id="targetPeriod"><option value="1">Anual</option><option value="2">Semestral</option><option value="4">Trimestral</option><option value="6">Bimestral</option><option value="12" selected>Mensual</option><option value="24">Quincenal (24/año)</option><option value="26">Quincenal (26/año)</option><option value="52">Semanal</option><option value="365">Diaria (365/año)</option></select></div>
+        <div class="field"><label for="targetMode">Modalidad de salida</label><select id="targetMode"><option value="vencida">Vencida</option><option value="anticipada">Anticipada</option></select></div>
+      </div>
+      <div class="actions"><button class="btn primary" onclick="convertRate()">Convertir tasa</button><button class="btn secondary" onclick="clearResult('rateResult')">Limpiar resultado</button></div>
+      <div id="rateResult" class="result" aria-live="polite"></div>
+    </div>
+  </section>
+
+  <section id="tiempo">
+    <div class="section-title"><span class="num">2</span><div><h2>Valor del dinero en el tiempo</h2><p>Calcula valor presente, valor futuro y anualidades.</p></div></div>
+    <div class="panel">
+      <h3>Calculadora de valor presente y futuro</h3><p class="subtext">Utiliza una tasa efectiva por período. Los períodos y la tasa deben corresponder a la misma frecuencia.</p>
+      <div class="grid">
+        <div class="field"><label for="tvMode">Operación</label><select id="tvMode"><option value="fv">Calcular valor futuro</option><option value="pv">Calcular valor presente</option></select></div>
+        <div class="field"><label for="tvAmount">Valor conocido ($)</label><input id="tvAmount" type="number" min="0" step="any" value="1000000"></div>
+        <div class="field"><label for="tvRate">Tasa efectiva por período (%)</label><input id="tvRate" type="number" min="0" step="any" value="2"></div>
+        <div class="field"><label for="tvN">Número de períodos</label><input id="tvN" type="number" min="0" step="1" value="12"></div>
+      </div>
+      <div class="actions"><button class="btn primary" onclick="timeValue()">Calcular</button><button class="btn secondary" onclick="clearResult('tvResult')">Limpiar resultado</button></div>
+      <div id="tvResult" class="result" aria-live="polite"></div>
+    </div>
+    <div class="panel">
+      <h3>Calculadora de anualidades</h3><p class="subtext">Pagos iguales al inicio (anticipada) o al final (vencida) de cada período.</p>
+      <div class="grid">
+        <div class="field"><label for="annMode">Operación</label><select id="annMode"><option value="pv">Valor presente de anualidad</option><option value="fv">Valor futuro de anualidad</option></select></div>
+        <div class="field"><label for="annPayment">Pago periódico ($)</label><input id="annPayment" type="number" min="0" step="any" value="150000"></div>
+        <div class="field"><label for="annRate">Tasa efectiva por período (%)</label><input id="annRate" type="number" min="0" step="any" value="1.5"></div>
+        <div class="field"><label for="annN">Número de pagos</label><input id="annN" type="number" min="1" step="1" value="12"></div>
+        <div class="field"><label for="annTiming">Momento del pago</label><select id="annTiming"><option value="ordinary">Vencida (al final)</option><option value="due">Anticipada (al inicio)</option></select></div>
+      </div>
+      <div class="actions"><button class="btn primary" onclick="annuity()">Calcular anualidad</button><button class="btn secondary" onclick="clearResult('annResult')">Limpiar resultado</button></div>
+      <div id="annResult" class="result" aria-live="polite"></div>
+    </div>
+  </section>
+
+  <section id="flujos">
+    <div class="section-title"><span class="num">3</span><div><h2>Diagramas económicos</h2><p>Construye un flujo de caja con ingresos y egresos.</p></div></div>
+    <div class="panel">
+      <h3>Constructor de flujo de caja</h3><p class="subtext">Ingresa los movimientos por período. Valores positivos se muestran como ingresos (flecha arriba) y negativos como egresos (flecha abajo).</p>
+      <div id="flowRows">
+        <div class="flow-row"><div class="field"><label>Período</label><input class="flow-period" type="number" min="0" step="1" value="0"></div><div class="field"><label>Concepto</label><input class="flow-label" value="Inversión inicial"></div><div class="field"><label>Flujo ($)</label><input class="flow-value" type="number" step="any" value="-5000000"></div><button class="btn secondary remove" onclick="removeFlow(this)" aria-label="Eliminar movimiento">×</button></div>
+        <div class="flow-row"><div class="field"><label>Período</label><input class="flow-period" type="number" min="0" step="1" value="1"></div><div class="field"><label>Concepto</label><input class="flow-label" value="Ingreso del período 1"></div><div class="field"><label>Flujo ($)</label><input class="flow-value" type="number" step="any" value="1800000"></div><button class="btn secondary remove" onclick="removeFlow(this)" aria-label="Eliminar movimiento">×</button></div>
+        <div class="flow-row"><div class="field"><label>Período</label><input class="flow-period" type="number" min="0" step="1" value="2"></div><div class="field"><label>Concepto</label><input class="flow-label" value="Ingreso del período 2"></div><div class="field"><label>Flujo ($)</label><input class="flow-value" type="number" step="any" value="2200000"></div><button class="btn secondary remove" onclick="removeFlow(this)" aria-label="Eliminar movimiento">×</button></div>
+      </div>
+      <div class="actions"><button class="btn secondary" onclick="addFlow()">+ Añadir movimiento</button><button class="btn primary" onclick="drawFlow()">Actualizar diagrama</button></div>
+      <canvas id="flowCanvas" width="1100" height="340" aria-label="Diagrama de flujo de caja"></canvas>
+      <div id="flowSummary" class="notice">El diagrama se actualiza al pulsar “Actualizar diagrama”.</div>
+    </div>
+  </section>
+
+  <section id="amortizacion">
+    <div class="section-title"><span class="num">4</span><div><h2>Tablas de amortización</h2><p>Compara cuota constante y abono constante a capital.</p></div></div>
+    <div class="panel">
+      <h3>Simulador de préstamo</h3><p class="subtext">La tasa efectiva por período debe corresponder a la frecuencia de pago del préstamo.</p>
+      <div class="grid">
+        <div class="field"><label for="loanAmount">Valor del préstamo ($)</label><input id="loanAmount" type="number" min="0.01" step="any" value="10000000"></div>
+        <div class="field"><label for="loanRate">Tasa efectiva por período (%)</label><input id="loanRate" type="number" min="0" step="any" value="1.8"></div>
+        <div class="field"><label for="loanN">Número de cuotas</label><input id="loanN" type="number" min="1" step="1" value="12"></div>
+        <div class="field"><label for="loanSystem">Sistema de amortización</label><select id="loanSystem"><option value="french">Cuota constante (francés)</option><option value="constant">Abono constante a capital (cuota decreciente)</option></select></div>
+      </div>
+      <div class="actions"><button class="btn primary" onclick="amortize()">Generar tabla</button><button class="btn secondary" onclick="downloadTable()">Descargar CSV</button></div>
+      <div id="loanMetrics" class="metrics"></div><div id="loanTable" class="table-wrap"></div>
+      <div id="loanResult" class="result"></div>
+    </div>
+  </section>
+
+  <section id="proyectos">
+    <div class="section-title"><span class="num">5</span><div><h2>Evaluación de proyectos de inversión</h2><p>Indicadores financieros y diagnóstico orientativo.</p></div></div>
+    <div class="panel">
+      <h3>Analizador de inversión</h3><p class="subtext">Ingresa los flujos netos por período separados por comas. El primer valor corresponde al período 1; la inversión inicial se ingresa aparte y se considera en el período 0.</p>
+      <div class="grid two">
+        <div class="field"><label for="projectInvestment">Inversión inicial ($)</label><input id="projectInvestment" type="number" min="0.01" step="any" value="10000000"></div>
+        <div class="field"><label for="projectDiscount">Tasa de descuento por período (%)</label><input id="projectDiscount" type="number" min="0" step="any" value="12"></div>
+        <div class="field"><label for="projectFinance">Tasa de financiación por período (%)</label><input id="projectFinance" type="number" min="0" step="any" value="10"></div>
+        <div class="field"><label for="projectReinvest">Tasa de reinversión por período (%)</label><input id="projectReinvest" type="number" min="0" step="any" value="12"></div>
+        <div class="field" style="grid-column:1/-1"><label for="projectFlows">Flujos netos de caja (períodos 1, 2, 3…)</label><textarea id="projectFlows" rows="3">3000000, 3500000, 4000000, 4500000</textarea><span class="hint">Usa números separados por comas. No incluyas aquí la inversión inicial.</span></div>
+      </div>
+      <div class="actions"><button class="btn primary" onclick="evaluateProject()">Evaluar proyecto</button><button class="btn secondary" onclick="clearResult('projectResult');document.getElementById('projectMetrics').innerHTML=''">Limpiar resultados</button></div>
+      <div id="projectMetrics" class="metrics"></div><div id="projectResult" class="result" aria-live="polite"></div>
+      <div class="notice">El análisis es académico y orientativo. La decisión real debe considerar impuestos, inflación, riesgo, financiación, capital de trabajo y supuestos del negocio. La TIR puede tener múltiples soluciones o no existir para ciertos flujos.</div>
+    </div>
+  </section>
+</main>
+<footer><strong>FINANZAS PRO</strong> · Herramienta académica de Matemáticas Financieras. Verifica los supuestos antes de tomar decisiones reales.</footer>
+<script>
+const money = n => new Intl.NumberFormat('es-CO',{style:'currency',currency:'COP',maximumFractionDigits:2}).format(n);
+const pct = n => Number.isFinite(n) ? (n*100).toLocaleString('es-CO',{maximumFractionDigits:6})+'%' : 'No calculable';
+const num = id => Number(document.getElementById(id).value);
+function show(id,html,error=false){const el=document.getElementById(id);el.innerHTML=html;el.classList.add('show');el.classList.toggle('error',error)}
+function clearResult(id){const e=document.getElementById(id);e.innerHTML='';e.classList.remove('show','error')}
+function validFinite(...vals){return vals.every(Number.isFinite)}
+function safeRate(rate){return Number.isFinite(rate)&&rate>=0}
+function convertRate(){
+ const v=num('rateValue')/100, m=Number(document.getElementById('ratePeriod').value), tm=Number(document.getElementById('targetPeriod').value);
+ const type=document.getElementById('rateType').value, target=document.getElementById('targetType').value;
+ const mode=document.getElementById('rateMode').value.trim(), tmode=document.getElementById('targetMode').value;
+ if(!Number.isFinite(v)||v<0||v>=1&&type==='effective'){show('rateResult','Ingresa una tasa válida. La tasa efectiva debe ser menor que 100% para esta conversión.',true);return}
+ let periodic;
+ if(type==='effective') periodic=Math.pow(1+v,1/m)-1;
+ else {if(v/m>=1){show('rateResult','La tasa nominal dividida por su frecuencia debe ser menor que 100%.',true);return}periodic=v/m}
+ // Convert anticipada discount rate d to equivalent vencida interest i=d/(1-d); reverse i to d=i/(1+i)
+ let vencida=mode==='anticipada' ? periodic/(1-periodic) : periodic;
+ if(!Number.isFinite(vencida)||vencida<0){show('rateResult','No fue posible convertir la tasa con esos datos.',true);return}
+ const ea=Math.pow(1+vencida,m)-1;
+ let targetPeriodic=Math.pow(1+ea,1/tm)-1;
+ if(tmode==='anticipada') targetPeriodic=targetPeriodic/(1+targetPeriodic);
+ let out=target==='effective' ? targetPeriodic : targetPeriodic*tm;
+ const label=target==='effective'?'efectiva por período':'nominal anual';
+ show('rateResult',`<strong>Resultado: ${pct(out)} ${label}</strong><br>Tasa efectiva anual equivalente: <strong>${pct(ea)}</strong><div class="formula">Conversión vencida: i = d / (1 − d) si la entrada es anticipada; d = i / (1 + i) si la salida es anticipada. Equivalencia: (1 + iₚ)ᵐ = 1 + EA.</div><p>La tasa de salida corresponde a la periodicidad seleccionada. Para tasa nominal, el resultado es una tasa nominal anual convertible ${tm} vez/veces al año.</p>`);
+}
+function timeValue(){
+ const mode=document.getElementById('tvMode').value, amount=num('tvAmount'), r=num('tvRate')/100,n=num('tvN');
+ if(!validFinite(amount,r,n)||amount<0||r<0||n<0||!Number.isInteger(n)){show('tvResult','Revisa los datos: los valores deben ser no negativos y los períodos un entero.',true);return}
+ const result=mode==='fv'?amount*Math.pow(1+r,n):amount/Math.pow(1+r,n);
+ if(!Number.isFinite(result)){show('tvResult','El resultado supera el rango numérico disponible.',true);return}
+ const formula=mode==='fv'?'VF = VP × (1 + i)ⁿ':'VP = VF ÷ (1 + i)ⁿ';
+ show('tvResult',`<strong>${mode==='fv'?'Valor futuro':'Valor presente'}: ${money(result)}</strong><div class="formula">${formula}; i = ${pct(r)}; n = ${n}</div><p>${mode==='fv'?'El valor conocido se capitaliza durante los períodos indicados.':'El valor futuro se descuenta al momento presente usando la tasa indicada.'}</p>`);
+}
+function annuity(){
+ const mode=document.getElementById('annMode').value,p=num('annPayment'),r=num('annRate')/100,n=num('annN'),due=document.getElementById('annTiming').value==='due';
+ if(!validFinite(p,r,n)||p<0||r<0||n<1||!Number.isInteger(n)){show('annResult','Ingresa pagos y tasa no negativos, y un número entero de pagos mayor que cero.',true);return}
+ let result;
+ if(r===0) result=p*n;
+ else if(mode==='pv') result=p*(1-Math.pow(1+r,-n))/r;
+ else result=p*(Math.pow(1+r,n)-1)/r;
+ if(due)result*=1+r;
+ const formula=mode==='pv'?'VP = R × [1 − (1 + i)⁻ⁿ] / i':'VF = R × [(1 + i)ⁿ − 1] / i';
+ show('annResult',`<strong>${mode==='pv'?'Valor presente':'Valor futuro'} de la anualidad: ${money(result)}</strong><div class="formula">${r===0?'Con i = 0: resultado = R × n':formula+'; '+(due?'multiplicar por (1 + i) por ser anticipada':'anualidad vencida')}.</div><p>Pago periódico: ${money(p)}. Número de pagos: ${n}. Modalidad: ${due?'anticipada':'vencida'}.</p>`);
+}
+function addFlow(){
+ const row=document.createElement('div');row.className='flow-row';row.innerHTML='<div class="field"><label>Período</label><input class="flow-period" type="number" min="0" step="1" value="3"></div><div class="field"><label>Concepto</label><input class="flow-label" value="Nuevo movimiento"></div><div class="field"><label>Flujo ($)</label><input class="flow-value" type="number" step="any" value="0"></div><button class="btn secondary remove" onclick="removeFlow(this)" aria-label="Eliminar movimiento">×</button>';document.getElementById('flowRows').appendChild(row)
+}
+function removeFlow(btn){const rows=document.querySelectorAll('#flowRows .flow-row');if(rows.length>1)btn.closest('.flow-row').remove()}
+function drawFlow(){
+ const rows=[...document.querySelectorAll('#flowRows .flow-row')].map(r=>({p:Number(r.querySelector('.flow-period').value),label:r.querySelector('.flow-label').value||'Flujo',v:Number(r.querySelector('.flow-value').value)}));
+ if(rows.some(x=>!Number.isInteger(x.p)||x.p<0||!Number.isFinite(x.v))){document.getElementById('flowSummary').textContent='Revisa los períodos y valores ingresados.';return}
+ rows.sort((a,b)=>a.p-b.p);
+ const canvas=document.getElementById('flowCanvas'),ctx=canvas.getContext('2d'),w=canvas.width,h=canvas.height;ctx.clearRect(0,0,w,h);ctx.fillStyle='#fff';ctx.fillRect(0,0,w,h);
+ const maxP=Math.max(1,...rows.map(x=>x.p)),left=65,right=w-35,base=210,top=38,step=(right-left)/maxP;
+ ctx.strokeStyle='#8fa2b5';ctx.lineWidth=2;ctx.beginPath();ctx.moveTo(left,base);ctx.lineTo(right,base);ctx.stroke();
+ const maxV=Math.max(1,...rows.map(x=>Math.abs(x.v)));
+ for(let p=0;p<=maxP;p++){let x=left+p*step;ctx.strokeStyle='#dce4ec';ctx.lineWidth=1;ctx.beginPath();ctx.moveTo(x,top);ctx.lineTo(x,h-35);ctx.stroke();ctx.fillStyle='#26384b';ctx.font='bold 14px Arial';ctx.textAlign='center';ctx.fillText('t='+p,x,base+25)}
+ rows.forEach(a=>{let x=left+a.p*step, len=45+Math.abs(a.v)/maxV*95, up=a.v>=0, end=up?base-len:base+len;ctx.strokeStyle=up?'#16a36a':'#d9534f';ctx.fillStyle=ctx.strokeStyle;ctx.lineWidth=4;ctx.beginPath();ctx.moveTo(x,base);ctx.lineTo(x,end);ctx.stroke();ctx.beginPath();if(up){ctx.moveTo(x,end-10);ctx.lineTo(x-7,end+2);ctx.lineTo(x+7,end+2)}else{ctx.moveTo(x,end+10);ctx.lineTo(x-7,end-2);ctx.lineTo(x+7,end-2)}ctx.closePath();ctx.fill();ctx.font='bold 12px Arial';ctx.textAlign='center';ctx.fillText(money(a.v),x,up?end-15:end+25);ctx.font='11px Arial';ctx.fillStyle='#475569';ctx.fillText(a.label.slice(0,18),x,up?end-30:end+40)});
+ document.getElementById('flowSummary').innerHTML=`Movimientos: <strong>${rows.length}</strong> · Flujo neto no descontado: <strong>${money(rows.reduce((s,x)=>s+x.v,0))}</strong>. Verde = ingreso; rojo = egreso.`;
+}
+let lastAmortRows=[];
+function amortize(){
+ const P=num('loanAmount'),r=num('loanRate')/100,n=num('loanN'),system=document.getElementById('loanSystem').value;
+ if(!validFinite(P,r,n)||P<=0||r<0||n<1||!Number.isInteger(n)){show('loanResult','Ingresa un préstamo positivo, una tasa no negativa y un número entero de cuotas mayor que cero.',true);return}
+ let balance=P,rows=[],totalInterest=0,totalPaid=0,constant=P/n;
+ const fixed=r===0?P/n:P*r/(1-Math.pow(1+r,-n));
+ for(let k=1;k<=n;k++){
+  let interest=balance*r,principal=system==='french'?fixed-interest:constant;
+  if(k===n)principal=balance;
+  let payment=principal+interest;balance=Math.max(0,balance-principal);
+  totalInterest+=interest;totalPaid+=payment;
+  rows.push({k,payment,interest,principal,balance});
+ }
+ lastAmortRows=rows;
+ document.getElementById('loanMetrics').innerHTML=`<div class="metric"><span>Cuota inicial</span><strong>${money(rows[0].payment)}</strong></div><div class="metric"><span>Total intereses</span><strong>${money(totalInterest)}</strong></div><div class="metric"><span>Total pagado</span><strong>${money(totalPaid)}</strong></div>`;
+ document.getElementById('loanTable').innerHTML='<table><thead><tr><th>Período</th><th>Cuota</th><th>Interés</th><th>Abono a capital</th><th>Saldo pendiente</th></tr></thead><tbody>'+rows.map(x=>`<tr><td>${x.k}</td><td>${money(x.payment)}</td><td>${money(x.interest)}</td><td>${money(x.principal)}</td><td>${money(x.balance)}</td></tr>`).join('')+'</tbody><tfoot><tr><td>Totales</td><td>'+money(totalPaid)+'</td><td>'+money(totalInterest)+'</td><td>'+money(P)+'</td><td>'+money(0)+'</td></tr></tfoot></table>';
+ show('loanResult',`Tabla generada mediante el sistema ${system==='french'?'francés de cuota constante':'de abono constante a capital'}. Las cifras se muestran sin redondear internamente; la presentación monetaria usa dos decimales.`);
+}
+function downloadTable(){
+ if(!lastAmortRows.length){show('loanResult','Primero genera una tabla de amortización para poder descargarla.',true);return}
+ const rows=[['Periodo','Cuota','Interes','Abono a capital','Saldo pendiente'],...lastAmortRows.map(x=>[x.k,x.payment.toFixed(2),x.interest.toFixed(2),x.principal.toFixed(2),x.balance.toFixed(2)])];
+ const csv='\uFEFF'+rows.map(r=>r.join(';')).join('\r\n'),blob=new Blob([csv],{type:'text/csv;charset=utf-8;'}),url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download='tabla_amortizacion_finanzas_pro.csv';a.click();URL.revokeObjectURL(url)
+}
+function npv(rate,flows){return flows.reduce((s,v,i)=>s+v/Math.pow(1+rate,i),0)}
+function irr(flows){
+ let hasPos=flows.some(x=>x>0),hasNeg=flows.some(x=>x<0);if(!hasPos||!hasNeg)return null;
+ let lo=-0.999999,hi=1, fLo=npv(lo,flows),fHi=npv(hi,flows),count=0;
+ while(fLo*fHi>0&&hi<1e7&&count<100){hi=hi*2+0.1;fHi=npv(hi,flows);count++}
+ if(!Number.isFinite(fLo)||!Number.isFinite(fHi)||fLo*fHi>0)return null;
+ for(let i=0;i<250;i++){let mid=(lo+hi)/2,f=npv(mid,flows);if(Math.abs(f)<1e-7)return mid;if(f*fLo>0){lo=mid;fLo=f}else hi=mid}
+ return (lo+hi)/2
+}
+function evaluateProject(){
+ const inv=num('projectInvestment'),d=num('projectDiscount')/100,fin=num('projectFinance')/100,re=num('projectReinvest')/100;
+ const raw=document.getElementById('projectFlows').value.trim();
+ const flows=raw.split(/[,;\n]+/).map(x=>Number(x.trim()));
+ if(!Number.isFinite(inv)||inv<=0||!safeRate(d)||!safeRate(fin)||!safeRate(re)||!raw||flows.some(x=>!Number.isFinite(x))||flows.length<1){show('projectResult','Completa la inversión, las tasas y al menos un flujo válido separado por comas.',true);return}
+ const cf=[-inv,...flows],v=npv(d,cf),rate=irr(cf);
+ // MIRR: PV of negative flows compounded at finance rate to time N; FV positives compounded at reinvestment rate.
+ const N=cf.length-1,negPV=cf.reduce((s,x,t)=>s+(x<0?x/Math.pow(1+fin,t):0),0),posFV=cf.reduce((s,x,t)=>s+(x>0?x*Math.pow(1+re,N-t):0),0);
+ const mirr=negPV<0&&posFV>=0?Math.pow(posFV/-negPV,1/N)-1:null;
+ let cum=0,pri=null;for(let t=1;t<cf.length;t++){let prev=cum;cum+=cf[t];if(cum>=0&&pri===null){pri=(t-1)+(-prev/cf[t]);}}
+ let discounted=-inv,pria=null;for(let t=1;t<cf.length;t++){let pv=cf[t]/Math.pow(1+d,t),prev=discounted;discounted+=pv;if(discounted>=0&&pria===null&&pv>0)pria=(t-1)+(-prev/pv)}
+ const pvBenefits=flows.reduce((s,x,i)=>s+(x>0?x/Math.pow(1+d,i+1):0),0);
+ const pvCosts=inv+flows.reduce((s,x,i)=>s+(x<0?-x/Math.pow(1+d,i+1):0),0);
+ const bc=pvCosts>0?pvBenefits/pvCosts:null;
+ const metric=(label,value)=>`<div class="metric"><span>${label}</span><strong>${value}</strong></div>`;
+ document.getElementById('projectMetrics').innerHTML=metric('VPN',money(v))+metric('TIR',rate===null?'No calculable':pct(rate))+metric('TIRM',mirr===null?'No calculable':pct(mirr))+metric('PRI',pri===null?'No se recupera':pri.toLocaleString('es-CO',{maximumFractionDigits:3})+' períodos')+metric('PRIA',pria===null?'No se recupera':pria.toLocaleString('es-CO',{maximumFractionDigits:3})+' períodos')+metric('Relación B/C',bc===null?'No calculable':bc.toLocaleString('es-CO',{maximumFractionDigits:4}));
+ let diagnosis=v>0?'Con los supuestos ingresados, el VPN es positivo: el proyecto crea valor frente a la tasa de descuento usada.':v<0?'Con los supuestos ingresados, el VPN es negativo: el proyecto no alcanza la rentabilidad exigida por la tasa de descuento.':'El VPN es aproximadamente cero: el proyecto apenas iguala la rentabilidad exigida.';
+ if(rate!==null)diagnosis+=` La TIR ${rate>=d?'supera o iguala':'es inferior a'} la tasa de descuento.`;
+ if(bc!==null)diagnosis+=` La relación beneficio/costo es ${bc>1?'mayor que 1':bc<1?'menor que 1':'igual a 1'}.`;
+ diagnosis+=' Estos indicadores no reemplazan una revisión de riesgos y supuestos.';
+ show('projectResult',`<strong>Diagnóstico orientativo</strong><br>${diagnosis}<div class="formula">VPN = Σ FCₜ/(1+k)ᵗ, incluyendo la inversión inicial en t=0. TIRM = (valor futuro de flujos positivos / valor presente absoluto de flujos negativos)^(1/N) − 1. PRI y PRIA se estiman por interpolación dentro del período de recuperación.</div><p>Horizonte evaluado: ${N} períodos. Flujos netos futuros ingresados: ${flows.length}.</p>`);
+}
+drawFlow();
+</script>
+</body>
+</html>
